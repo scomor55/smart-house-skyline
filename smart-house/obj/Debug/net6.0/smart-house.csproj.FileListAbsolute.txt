@@ -12,3 +12,4 @@ C:\Users\PC\source\repos\smart-house\smart-house\obj\Debug\net6.0\refint\smart-h
 C:\Users\PC\source\repos\smart-house\smart-house\obj\Debug\net6.0\smart-house.pdb
 C:\Users\PC\source\repos\smart-house\smart-house\obj\Debug\net6.0\smart-house.genruntimeconfig.cache
 C:\Users\PC\source\repos\smart-house\smart-house\obj\Debug\net6.0\ref\smart-house.dll
+C:\Users\PC\source\repos\smart-house\smart-house\obj\Debug\net6.0\smart-house.sourcelink.json
