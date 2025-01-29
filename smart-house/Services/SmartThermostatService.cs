@@ -43,7 +43,7 @@ namespace smart_house.Services
             }
         }
 
-        public void SwitchMode(SmartThermostat thermostat, thermostatMode mode)
+        public void SwitchMode(SmartThermostat thermostat, ThermostatMode mode)
         {
             if (thermostat.IsOn)
             {

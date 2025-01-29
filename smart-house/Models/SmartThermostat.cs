@@ -15,13 +15,13 @@ namespace smart_house.Models
             IsOn = false;
             CurrentTemperature = 20;
             TargetTemperature = 20;
-            Mode = thermostatMode.Off;
+            Mode = ThermostatMode.Off;
         }
         public int Id { get; set; }
         public string Name { get; set; }
         public bool IsOn { get; set; }
         public int CurrentTemperature { get; set; }
         public int TargetTemperature { get; set; }
-        public thermostatMode Mode { get; set; }
+        public ThermostatMode Mode { get; set; }
     }
 }

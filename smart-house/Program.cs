@@ -35,7 +35,7 @@ Console.WriteLine($"Default temperature: {thermostat.TargetTemperature}");
 thermostatService.SetTemperature(thermostat, 22);
 Console.WriteLine($"Target temperature: {thermostat.TargetTemperature}");
 Console.WriteLine($"Initial mode: {thermostat.Mode}");
-thermostatService.SwitchMode(thermostat, thermostatMode.Heat);
+thermostatService.SwitchMode(thermostat, ThermostatMode.Heat);
 Console.WriteLine($"Set mode: {thermostat.Mode}");
 
 thermostatService.TurnOff(thermostat);

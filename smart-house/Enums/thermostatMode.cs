@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace smart_house.Enums
 {
-    public enum thermostatMode
+    public enum ThermostatMode
     {
         Heat,
         Cool,
