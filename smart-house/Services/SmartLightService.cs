@@ -9,7 +9,7 @@ namespace smart_house.Services
 {
     public class SmartLightService : IDeviceService<SmartLight>
     {
-        public bool turnOn(SmartLight light)
+        public bool TurnOn(SmartLight light)
         {
             if (!light.IsOn)
             {
@@ -19,7 +19,7 @@ namespace smart_house.Services
             return false;
         }
 
-        public bool turnOff(SmartLight light)
+        public bool TurnOff(SmartLight light)
         {
             if (light.IsOn)
             {
@@ -29,18 +29,18 @@ namespace smart_house.Services
             return false;
         }
 
-        public string getStatus(SmartLight light) {
+        public string GetStatus(SmartLight light) {
             if (light.IsOn) return "On";
             else return "Off";
         }
 
-        public void setBrightness(SmartLight light, int level) {
-            if(level >= 0 &&  level <= 100) light.brightness = level;
+        public void SetBrightness(SmartLight light, int level) {
+            if(level >= 0 &&  level <= 100) light.Brightness = level;
         }
 
         public void changeColor(SmartLight light,string newColor)
         {
-            light.color = newColor.ToLower();
+            light.Color = newColor.ToLower();
         }
     }
 }

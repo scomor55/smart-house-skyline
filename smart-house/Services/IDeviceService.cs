@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace smart_house.Services
 {
-    public interface IDeviceService<T> where T : Device
+    public interface IDeviceService<T> where T : IDevice
     {
-        public bool turnOn(T device);
-        public bool turnOff(T device);
-        public string getStatus(T device);
+        public bool TurnOn(T device);
+        public bool TurnOff(T device);
+        public string GetStatus(T device);
     }
 }

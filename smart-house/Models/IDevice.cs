@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace smart_house.Models
 {
-    public interface Device
+    public interface IDevice
     {
         public int Id { get; set; }
         public string Name { get; set; }
