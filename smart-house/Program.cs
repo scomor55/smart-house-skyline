@@ -42,3 +42,32 @@ thermostatService.TurnOff(thermostat);
 Console.WriteLine($"Thermostat status: {thermostatService.GetStatus(thermostat)}");
 
 
+Console.WriteLine("Smart lock test ");
+
+SmartLock smartLock = new SmartLock(1, "Front door");
+SmartLockService smartLockService = new SmartLockService();
+
+Console.WriteLine($"Initial lock status: {smartLockService.GetStatus(smartLock)}");
+smartLockService.TurnOn(smartLock);
+Console.WriteLine($"After turnOn: {smartLockService.GetStatus(smartLock)}");
+Console.WriteLine($"Default lock status: { smartLock.IsLocked }");
+smartLockService.Lock(smartLock);
+Console.WriteLine($"New status: {smartLock.IsLocked}");
+smartLockService.Unlock(smartLock,"0000");
+Console.WriteLine($"New status: {smartLock.IsLocked}");
+smartLockService.ChangePin(smartLock, "0000", "1111");
+Console.WriteLine($"New PIN: {smartLock.PinCode}");
+smartLockService.TurnOff(smartLock);
+Console.WriteLine($"After turnOff: {smartLockService.GetStatus(smartLock)}");
+
+
+
+
+
+
+
+
+
+
+
+
