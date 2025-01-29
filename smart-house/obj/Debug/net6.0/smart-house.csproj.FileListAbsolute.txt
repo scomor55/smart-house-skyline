@@ -1,0 +1,14 @@
+C:\Users\PC\source\repos\smart-house\smart-house\bin\Debug\net6.0\smart-house.exe
+C:\Users\PC\source\repos\smart-house\smart-house\bin\Debug\net6.0\smart-house.deps.json
+C:\Users\PC\source\repos\smart-house\smart-house\bin\Debug\net6.0\smart-house.runtimeconfig.json
+C:\Users\PC\source\repos\smart-house\smart-house\bin\Debug\net6.0\smart-house.dll
+C:\Users\PC\source\repos\smart-house\smart-house\bin\Debug\net6.0\smart-house.pdb
+C:\Users\PC\source\repos\smart-house\smart-house\obj\Debug\net6.0\smart-house.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\PC\source\repos\smart-house\smart-house\obj\Debug\net6.0\smart-house.AssemblyInfoInputs.cache
+C:\Users\PC\source\repos\smart-house\smart-house\obj\Debug\net6.0\smart-house.AssemblyInfo.cs
+C:\Users\PC\source\repos\smart-house\smart-house\obj\Debug\net6.0\smart-house.csproj.CoreCompileInputs.cache
+C:\Users\PC\source\repos\smart-house\smart-house\obj\Debug\net6.0\smart-house.dll
+C:\Users\PC\source\repos\smart-house\smart-house\obj\Debug\net6.0\refint\smart-house.dll
+C:\Users\PC\source\repos\smart-house\smart-house\obj\Debug\net6.0\smart-house.pdb
+C:\Users\PC\source\repos\smart-house\smart-house\obj\Debug\net6.0\smart-house.genruntimeconfig.cache
+C:\Users\PC\source\repos\smart-house\smart-house\obj\Debug\net6.0\ref\smart-house.dll
