@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace smart_house.Models
 {
-    public class SmartBlinds : IDevice
+    public class SmartBlind : IDevice
     {
-        public SmartBlinds(int id, string name) {
+        public SmartBlind(int id, string name) {
             Id = id;
             Name = name;
             Position = 0;

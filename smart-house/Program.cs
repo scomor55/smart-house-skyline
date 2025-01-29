@@ -61,6 +61,41 @@ smartLockService.TurnOff(smartLock);
 Console.WriteLine($"After turnOff: {smartLockService.GetStatus(smartLock)}");
 
 
+Console.WriteLine("Smart blind test ");
+SmartBlind smartBlind = new SmartBlind(1, "Blind 1");
+SmartBlindService smartBlindService = new SmartBlindService();
+Console.WriteLine($"Initial blind status: {smartBlindService.GetStatus(smartBlind)}");
+smartBlindService.TurnOn(smartBlind);
+Console.WriteLine($"After turn on: {smartBlindService.GetStatus(smartBlind)}");
+Console.WriteLine($"Default position: {smartBlind.Position}");
+smartBlindService.SetPosition(smartBlind, 1);
+Console.WriteLine($"New position: {smartBlind.Position}");
+smartBlindService.OpenBlinds(smartBlind);
+Console.WriteLine($"New position: {smartBlind.Position}");
+smartBlindService.CloseBlinds(smartBlind);
+Console.WriteLine($"New position: {smartBlind.Position}");
+Console.WriteLine($"Default automation: {smartBlind.IsAutomatic}");
+smartBlindService.EnableAutoMode(smartBlind);
+Console.WriteLine($"New automation: {smartBlind.IsAutomatic}");
+Console.WriteLine($"Default light sensor: {smartBlind.LightSensor}");
+smartBlindService.AdjustToLightLevel(smartBlind);
+Console.WriteLine($"New light sensor: {smartBlind.LightSensor}");
+smartBlindService.TurnOff(smartBlind);
+Console.WriteLine($"After turn off: {smartBlindService.GetStatus(smartBlind)}");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

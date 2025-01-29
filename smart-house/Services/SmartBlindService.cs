@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace smart_house.Services
 {
-    public class SmartBlindsService : IDeviceService<SmartBlinds>
+    public class SmartBlindService : IDeviceService<SmartBlind>
     {
-        public bool TurnOn(SmartBlinds smartBlind)
+        public bool TurnOn(SmartBlind smartBlind)
         {
             if (!smartBlind.IsOn)
             {
@@ -19,7 +19,7 @@ namespace smart_house.Services
             return false;
         }
 
-        public bool TurnOff(SmartBlinds smartBlind)
+        public bool TurnOff(SmartBlind smartBlind)
         {
             if (smartBlind.IsOn)
             {
@@ -29,32 +29,32 @@ namespace smart_house.Services
             return false;
         }
 
-        public string GetStatus(SmartBlinds smartBlind)
+        public string GetStatus(SmartBlind smartBlind)
         {
             if (smartBlind.IsOn) return "On";
             else return "Off";
         }
 
-        public void OpenBlinds(SmartBlinds smartBlind) {
+        public void OpenBlinds(SmartBlind smartBlind) {
             smartBlind.Position = 100;
         }
 
-        public void CloseBlinds(SmartBlinds smartBlind)
+        public void CloseBlinds(SmartBlind smartBlind)
         {
             smartBlind.Position = 0;
         }
 
-        public void SetPosition(SmartBlinds smartBlind, int position)
+        public void SetPosition(SmartBlind smartBlind, int position)
         {
             smartBlind.Position = position;
         }
 
-        public void EnableAutoMode(SmartBlinds smartBlind)
+        public void EnableAutoMode(SmartBlind smartBlind)
         {
             smartBlind.IsAutomatic = true;
         }
 
-        public void AdjustToLightLevel(SmartBlinds smartBlind)
+        public void AdjustToLightLevel(SmartBlind smartBlind)
         {
             smartBlind.LightSensor = true;
         }
