@@ -25,6 +25,7 @@ deviceList.Add(thermostat);
 deviceList.Add(smartLock);
 deviceList.Add(smartBlind);
 
+
 foreach (var device in deviceList)
 {
     Console.WriteLine($"| {device.Id} {device.Name} ({device.GetType().Name})");
@@ -117,7 +118,7 @@ while (true)
                         Console.WriteLine("Enter brightness level");
                         string brightnessLevel = Console.ReadLine();
 
-                        lightService.SetBrightness((SmartLight)device3, int.Parse(brightnessLevel));
+                        lightService.SetBrightness((SmartLight)device3, Convert.ToInt32(brightnessLevel));
                     }else if (manageLight == "2")
                     {
                         Console.WriteLine("Enter new color:");
@@ -125,6 +126,101 @@ while (true)
 
                         lightService.ChangeColor((SmartLight)device3,color);
 
+                    }
+                    else
+                    {
+                        Console.WriteLine("Wrong input");
+                    }
+                }
+                else if (device3 is SmartThermostat)
+                {
+                    Console.WriteLine($"Selected: {device3.Name} ");
+                    Console.WriteLine("");
+                    Console.WriteLine("1 - Set temperature");
+                    Console.WriteLine("2 - Change mode");
+                    string manageThermostat = Console.ReadLine();
+
+                    if(manageThermostat == "1")
+                    {
+                        Console.WriteLine("Enter target temperature: ");
+                        string targetTemperature = Console.ReadLine();
+                        thermostatService.SetTemperature((SmartThermostat)device3, Convert.ToInt32(targetTemperature));
+                    }
+                    else if(manageThermostat=="2")
+                    {
+                        Console.WriteLine("1 - Heat");
+                        Console.WriteLine("2 - Cool");
+                        Console.WriteLine("3 - Auto");
+                        Console.WriteLine("4 - Off");
+                        string targetTemperature = Console.ReadLine();
+
+                        if (targetTemperature == "1") thermostatService.SwitchMode((SmartThermostat)device3,ThermostatMode.Heat);
+                        if (targetTemperature == "2") thermostatService.SwitchMode((SmartThermostat)device3, ThermostatMode.Cool);
+                        if (targetTemperature == "3") thermostatService.SwitchMode((SmartThermostat)device3, ThermostatMode.Auto);
+                        if (targetTemperature == "4") thermostatService.SwitchMode((SmartThermostat)device3, ThermostatMode.Off);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Wrong input");
+                    }
+                }else if(device3 is SmartLock){
+                    Console.WriteLine($"Selected: {device3.Name} ");
+                    Console.WriteLine("");
+                    Console.WriteLine("1 - Lock");
+                    Console.WriteLine("2 - Unlock");
+                    Console.WriteLine("3 - Change Pin");
+                    Console.WriteLine("4 - Change mode");
+                    string manageLock = Console.ReadLine();
+                    if(manageLock == "1")
+                    {
+                        lockService.Lock((SmartLock)device3);
+                    }else if(manageLock == "2")
+                    {
+                        Console.WriteLine("Enter PinCode");
+                        string pinCode = Console.ReadLine();
+                        lockService.Unlock((SmartLock)device3,pinCode);
+                    }else if(manageLock == "3")
+                    {
+                        //Ovaj dio izmijeniti
+                        Console.WriteLine("Enter PinCode");
+                        string pinCode = Console.ReadLine();
+                        Console.WriteLine("Enter new PinCode");
+                        string newPinCode = Console.ReadLine();
+
+                        lockService.ChangePin((SmartLock)device3,pinCode,newPinCode);
+                    }else if(manageLock == "4")
+                    {
+                        Console.WriteLine($"Battery level: {lockService.CheckBattery((SmartLock)device3)}");
+                    }
+                }else if(device3 is SmartBlind)
+                {
+                    Console.WriteLine($"Selected: {device3.Name} ");
+                    Console.WriteLine("");
+                    Console.WriteLine("1 - Open blind");
+                    Console.WriteLine("2 - Close blind");
+                    Console.WriteLine("3 - Set position");
+                    Console.WriteLine("4 - Enable auto mode");
+                    Console.WriteLine("5 - Adjust to light level");
+
+                    string manageBlind = Console.ReadLine();
+
+                    if(manageBlind == "1")
+                    {
+                        blindService.OpenBlind((SmartBlind)device3);
+                    }else if(manageBlind == "2")
+                    {
+                        blindService.CloseBlind((SmartBlind)device3);
+                    }else if(manageBlind == "3")
+                    {
+                        Console.WriteLine("Enter position value: ");
+                        string positionValue = Console.ReadLine();
+                        blindService.SetPosition((SmartBlind)device3, Convert.ToInt32(positionValue));
+                    }else if(manageBlind == "4")
+                    {
+                        blindService.EnableAutoMode((SmartBlind)device3);
+                    }else if(manageBlind == "5")
+                    {
+                        blindService.AdjustToLightLevel((SmartBlind)device3);
                     }
                 }
             }
@@ -136,24 +232,3 @@ while (true)
             break;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
