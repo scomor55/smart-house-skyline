@@ -35,18 +35,19 @@ namespace smart_house.Services
             else return "Off";
         }
 
-        public void OpenBlinds(SmartBlind smartBlind) {
+        public void OpenBlind(SmartBlind smartBlind) {
             smartBlind.Position = 100;
         }
 
-        public void CloseBlinds(SmartBlind smartBlind)
+        public void CloseBlind(SmartBlind smartBlind)
         {
             smartBlind.Position = 0;
         }
 
         public void SetPosition(SmartBlind smartBlind, int position)
         {
-            smartBlind.Position = position;
+            
+            if(position >= 0 && position <= 100) smartBlind.Position = position;
         }
 
         public void EnableAutoMode(SmartBlind smartBlind)

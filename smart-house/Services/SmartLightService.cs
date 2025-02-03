@@ -38,7 +38,7 @@ namespace smart_house.Services
             if(level >= 0 &&  level <= 100) light.Brightness = level;
         }
 
-        public void changeColor(SmartLight light,string newColor)
+        public void ChangeColor(SmartLight light,string newColor)
         {
             light.Color = newColor.ToLower();
         }
