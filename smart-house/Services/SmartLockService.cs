@@ -51,12 +51,13 @@ namespace smart_house.Services
             }
         }
 
-        public void ChangePin(SmartLock smartLock, string oldPinCode, string newPinCode)
+        public bool ValidatePin(SmartLock smartLock, string oldPin) {
+            return smartLock.PinCode == oldPin;
+        }
+
+        public void ChangePin(SmartLock smartLock, string newPinCode)
         {
-            if (smartLock.IsOn && smartLock.PinCode == oldPinCode)
-            {
                 smartLock.PinCode = newPinCode;
-            }
         }
 
         public int CheckBattery(SmartLock smartLock)
