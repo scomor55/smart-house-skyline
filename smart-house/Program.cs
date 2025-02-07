@@ -28,14 +28,19 @@ deviceList.Add(smartBlind);
 
 foreach (var device in deviceList)
 {
-    Console.WriteLine($"| {device.Id} {device.Name} ({device.GetType().Name})");
+    Console.WriteLine($"| ------------------------------------------------------- |");
+    Console.WriteLine($"| {device.Id} | {device.Name} | ({device.GetType().Name}) |");
+
 }
+Console.WriteLine();
 while (true)
 {
     Console.WriteLine("Select an option: ");
     Console.WriteLine("1. Show device status ");
     Console.WriteLine("2. Turn on / off device ");
     Console.WriteLine("3. Manage device device ");
+    Console.WriteLine("4. Exit ");
+
 
     string choice = Console.ReadLine();
 
@@ -181,13 +186,20 @@ while (true)
                         lockService.Unlock((SmartLock)device3,pinCode);
                     }else if(manageLock == "3")
                     {
-                        //Ovaj dio izmijeniti
                         Console.WriteLine("Enter PinCode");
                         string pinCode = Console.ReadLine();
-                        Console.WriteLine("Enter new PinCode");
-                        string newPinCode = Console.ReadLine();
 
-                        lockService.ChangePin((SmartLock)device3,pinCode,newPinCode);
+                        if (lockService.ValidatePin((SmartLock)device3, pinCode))
+                        {
+                            Console.WriteLine("Enter new PinCode");
+                            string newPinCode = Console.ReadLine();
+
+                            lockService.ChangePin((SmartLock)device3, newPinCode);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Wrong input");
+                        }
                     }else if(manageLock == "4")
                     {
                         Console.WriteLine($"Battery level: {lockService.CheckBattery((SmartLock)device3)}");
