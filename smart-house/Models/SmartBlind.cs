@@ -6,25 +6,17 @@ using System.Threading.Tasks;
 
 namespace smart_house.Models
 {
-    public class SmartBlind : IDevice
+    public class SmartBlind : SmartDevice
     {
-        public SmartBlind(int id, string name) {
-            Id = id;
-            Name = name;
+        public SmartBlind(int id, string name) : base (id, name) {
             Position = 0;
             IsAutomatic = false;
             LightSensor = false;
         }
 
-        
-        public int Id { get; set; }
-        public string Name {  get; set; }
-        public bool IsOn { get; set; }
-
         public int Position { get; set; }
         public bool IsAutomatic { get; set; }
         public bool LightSensor { get; set; }
-
 
     }
 }

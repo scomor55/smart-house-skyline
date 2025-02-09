@@ -7,19 +7,13 @@ using System.Threading.Tasks;
 
 namespace smart_house.Models
 {
-    public class SmartThermostat : IDevice
+    public class SmartThermostat : SmartDevice
     {
-        public SmartThermostat(int id, string name) {
-            Id = id;
-            Name = name;
-            IsOn = false;
+        public SmartThermostat(int id, string name) : base(id,name) {
             CurrentTemperature = 20;
             TargetTemperature = 20;
-            Mode = ThermostatMode.Off;
+            Mode = ThermostatMode.Auto;
         }
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public bool IsOn { get; set; }
         public int CurrentTemperature { get; set; }
         public int TargetTemperature { get; set; }
         public ThermostatMode Mode { get; set; }

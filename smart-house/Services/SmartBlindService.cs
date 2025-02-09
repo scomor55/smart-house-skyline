@@ -44,10 +44,13 @@ namespace smart_house.Services
             smartBlind.Position = 0;
         }
 
-        public void SetPosition(SmartBlind smartBlind, int position)
+        public bool SetPosition(SmartBlind smartBlind, int position)
         {
-            
-            if(position >= 0 && position <= 100) smartBlind.Position = position;
+            if (position >= 0 && position <= 100) {
+                smartBlind.Position = position;
+                return true;    
+            }
+            return false;
         }
 
         public void EnableAutoMode(SmartBlind smartBlind)

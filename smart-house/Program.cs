@@ -2,6 +2,10 @@
 using smart_house.Services;
 using smart_house.Enums;
 using System.Net.WebSockets;
+using System.Diagnostics.Metrics;
+using System.Runtime.InteropServices;
+
+//Test data
 
 SmartLightService lightService = new SmartLightService();
 SmartLight myLight = new SmartLight(1, "Living room");
@@ -18,12 +22,14 @@ SmartLockService lockService = new SmartLockService();
 SmartBlind smartBlind = new SmartBlind(4, "Blind 1");
 SmartBlindService blindService = new SmartBlindService();
 
-List<IDevice> deviceList = new List<IDevice>();
+List<IDevice> deviceList = new List<IDevice>
+{
+    myLight,
+    thermostat,
+    smartLock,
+    smartBlind
+};
 
-deviceList.Add(myLight);
-deviceList.Add(thermostat);
-deviceList.Add(smartLock);
-deviceList.Add(smartBlind);
 
 
 foreach (var device in deviceList)
@@ -51,13 +57,13 @@ while (true)
             string deviceId1 = Console.ReadLine();
             var device1 = deviceList.FirstOrDefault(d => d.Id.ToString() == deviceId1);
 
-            if(device1 != null)
+            if (device1 != null)
             {
                 string status = "";
                 if (device1 is SmartLight) status = lightService.GetStatus((SmartLight)device1);
-                else if (device1 is SmartBlind ) status = blindService.GetStatus((SmartBlind)device1);
-                else if (device1 is SmartThermostat ) status = thermostatService.GetStatus((SmartThermostat)device1);
-                else if (device1 is SmartLock ) status = lockService.GetStatus((SmartLock)device1);
+                else if (device1 is SmartBlind) status = blindService.GetStatus((SmartBlind)device1);
+                else if (device1 is SmartThermostat) status = thermostatService.GetStatus((SmartThermostat)device1);
+                else if (device1 is SmartLock) status = lockService.GetStatus((SmartLock)device1);
 
                 Console.WriteLine($"Device : {device1.Name} , Status : {status}");
             }
@@ -71,31 +77,34 @@ while (true)
             Console.WriteLine("Enter device id: ");
             string deviceId2 = Console.ReadLine();
             var device2 = deviceList.FirstOrDefault(d => d.Id.ToString() == deviceId2);
-            if(device2 != null)
+            if (device2 != null)
             {
 
-                Console.WriteLine($"Selected: {device2.Name } ");
+                Console.WriteLine($"Selected: {device2.Name} ");
                 Console.WriteLine("");
                 Console.WriteLine("1 - Turn device on ");
                 Console.WriteLine("2 - Turn device off ");
 
                 string action = Console.ReadLine();
                 bool result = false;
-                if(action == "1")
+                if (action == "1")
                 {
-                    if(device2 is SmartLight) result = lightService.TurnOn((SmartLight)device2);
+                    if (device2 is SmartLight) result = lightService.TurnOn((SmartLight)device2);
                     if (device2 is SmartLock) result = lockService.TurnOn((SmartLock)device2);
                     if (device2 is SmartThermostat) result = thermostatService.TurnOn((SmartThermostat)device2);
                     if (device2 is SmartBlind) result = blindService.TurnOn((SmartBlind)device2);
 
                     if (result) Console.WriteLine("Device turned on succesfully");
-                }else if (action == "2")
+                    else Console.WriteLine("Device is already turned on!");
+                }
+                else if (action == "2")
                 {
                     if (device2 is SmartLight) result = lightService.TurnOff((SmartLight)device2);
                     if (device2 is SmartLock) result = lockService.TurnOff((SmartLock)device2);
                     if (device2 is SmartThermostat) result = thermostatService.TurnOff((SmartThermostat)device2);
                     if (device2 is SmartBlind) result = blindService.TurnOff((SmartBlind)device2);
                     if (result) Console.WriteLine("Defice turned off sucesfully");
+                    else Console.WriteLine("Device is already turned off!");
                 }
             }
             else
@@ -108,9 +117,9 @@ while (true)
             Console.WriteLine("Enter device id: ");
             string deviceId3 = Console.ReadLine();
             var device3 = deviceList.FirstOrDefault(d => d.Id.ToString() == deviceId3);
-            if(device3 != null)
+            if (device3 != null)
             {
-                if(device3 is SmartLight)
+                if (device3 is SmartLight)
                 {
                     Console.WriteLine($"Selected: {device3.Name} ");
                     Console.WriteLine("");
@@ -118,19 +127,22 @@ while (true)
                     Console.WriteLine("2 - Change color ");
                     string manageLight = Console.ReadLine();
 
-                    if(manageLight == "1")
+                    if (manageLight == "1")
                     {
                         Console.WriteLine("Enter brightness level");
                         string brightnessLevel = Console.ReadLine();
 
-                        lightService.SetBrightness((SmartLight)device3, Convert.ToInt32(brightnessLevel));
-                    }else if (manageLight == "2")
+                        bool checkLight = lightService.SetBrightness((SmartLight)device3, Convert.ToInt32(brightnessLevel));
+                        if (checkLight) Console.WriteLine($"Brightness for {device3.Name} set to {brightnessLevel}");
+                        else Console.WriteLine("Wrong input! (Enter number between 0 and 100)");
+                    }
+                    else if (manageLight == "2")
                     {
                         Console.WriteLine("Enter new color:");
                         string color = Console.ReadLine();
 
-                        lightService.ChangeColor((SmartLight)device3,color);
-
+                        lightService.ChangeColor((SmartLight)device3, color);
+                        Console.WriteLine($"Collor for {device3.Name} set to {color} ");
                     }
                     else
                     {
@@ -145,46 +157,62 @@ while (true)
                     Console.WriteLine("2 - Change mode");
                     string manageThermostat = Console.ReadLine();
 
-                    if(manageThermostat == "1")
+                    if (manageThermostat == "1")
                     {
                         Console.WriteLine("Enter target temperature: ");
                         string targetTemperature = Console.ReadLine();
                         thermostatService.SetTemperature((SmartThermostat)device3, Convert.ToInt32(targetTemperature));
+                        Console.WriteLine($"{device3.Name} temperature set to {targetTemperature}");
                     }
-                    else if(manageThermostat=="2")
+                    else if (manageThermostat == "2")
                     {
                         Console.WriteLine("1 - Heat");
                         Console.WriteLine("2 - Cool");
                         Console.WriteLine("3 - Auto");
-                        Console.WriteLine("4 - Off");
                         string targetTemperature = Console.ReadLine();
 
-                        if (targetTemperature == "1") thermostatService.SwitchMode((SmartThermostat)device3,ThermostatMode.Heat);
-                        if (targetTemperature == "2") thermostatService.SwitchMode((SmartThermostat)device3, ThermostatMode.Cool);
-                        if (targetTemperature == "3") thermostatService.SwitchMode((SmartThermostat)device3, ThermostatMode.Auto);
-                        if (targetTemperature == "4") thermostatService.SwitchMode((SmartThermostat)device3, ThermostatMode.Off);
+                        if (targetTemperature == "1")
+                        {
+                            thermostatService.SwitchMode((SmartThermostat)device3, ThermostatMode.Heat);
+                            Console.WriteLine("Heat mode activated");
+                        }
+                        if (targetTemperature == "2") { 
+                            thermostatService.SwitchMode((SmartThermostat)device3, ThermostatMode.Cool);
+                            Console.WriteLine("Cool mode activated");
+                        }
+                        if (targetTemperature == "3") {
+                            thermostatService.SwitchMode((SmartThermostat)device3, ThermostatMode.Auto);
+                            Console.WriteLine("Auto mode activated");
+                        }
+
                     }
                     else
                     {
                         Console.WriteLine("Wrong input");
                     }
-                }else if(device3 is SmartLock){
+                }
+                else if (device3 is SmartLock)
+                {
                     Console.WriteLine($"Selected: {device3.Name} ");
                     Console.WriteLine("");
                     Console.WriteLine("1 - Lock");
                     Console.WriteLine("2 - Unlock");
                     Console.WriteLine("3 - Change Pin");
-                    Console.WriteLine("4 - Change mode");
+                    Console.WriteLine("4 - Check battery");
                     string manageLock = Console.ReadLine();
-                    if(manageLock == "1")
+                    if (manageLock == "1")
                     {
                         lockService.Lock((SmartLock)device3);
-                    }else if(manageLock == "2")
+                        Console.WriteLine($"{device3.Name} is locked");
+                    }
+                    else if (manageLock == "2")
                     {
                         Console.WriteLine("Enter PinCode");
                         string pinCode = Console.ReadLine();
-                        lockService.Unlock((SmartLock)device3,pinCode);
-                    }else if(manageLock == "3")
+                        lockService.Unlock((SmartLock)device3, pinCode);
+                        Console.WriteLine($"{device3.Name} is unlocked");
+                    }
+                    else if (manageLock == "3")
                     {
                         Console.WriteLine("Enter PinCode");
                         string pinCode = Console.ReadLine();
@@ -195,16 +223,19 @@ while (true)
                             string newPinCode = Console.ReadLine();
 
                             lockService.ChangePin((SmartLock)device3, newPinCode);
+                            Console.WriteLine($"{device3.Name} PIN changed");
                         }
                         else
                         {
                             Console.WriteLine("Wrong input");
                         }
-                    }else if(manageLock == "4")
+                    }
+                    else if (manageLock == "4")
                     {
                         Console.WriteLine($"Battery level: {lockService.CheckBattery((SmartLock)device3)}");
                     }
-                }else if(device3 is SmartBlind)
+                }
+                else if (device3 is SmartBlind)
                 {
                     Console.WriteLine($"Selected: {device3.Name} ");
                     Console.WriteLine("");
@@ -216,23 +247,33 @@ while (true)
 
                     string manageBlind = Console.ReadLine();
 
-                    if(manageBlind == "1")
+                    if (manageBlind == "1")
                     {
                         blindService.OpenBlind((SmartBlind)device3);
-                    }else if(manageBlind == "2")
+                        Console.WriteLine($"{device3.Name} is opened");
+                    }
+                    else if (manageBlind == "2")
                     {
                         blindService.CloseBlind((SmartBlind)device3);
-                    }else if(manageBlind == "3")
+                        Console.WriteLine($"{device3.Name} is closed");
+                    }
+                    else if (manageBlind == "3")
                     {
                         Console.WriteLine("Enter position value: ");
                         string positionValue = Console.ReadLine();
-                        blindService.SetPosition((SmartBlind)device3, Convert.ToInt32(positionValue));
-                    }else if(manageBlind == "4")
+                        bool checkBlind = blindService.SetPosition((SmartBlind)device3, Convert.ToInt32(positionValue));
+                        if (checkBlind) Console.WriteLine($"{device3.Name} position set to {positionValue}");
+                        else Console.WriteLine("Wrong input!(Enter number between 0 and 100)");
+                    }
+                    else if (manageBlind == "4")
                     {
                         blindService.EnableAutoMode((SmartBlind)device3);
-                    }else if(manageBlind == "5")
+                        Console.WriteLine("Auto mode enabled");
+                    }
+                    else if (manageBlind == "5")
                     {
                         blindService.AdjustToLightLevel((SmartBlind)device3);
+                        Console.WriteLine("Blinds adjusted to light level");
                     }
                 }
             }
