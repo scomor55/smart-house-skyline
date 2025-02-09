@@ -34,8 +34,14 @@ namespace smart_house.Services
             else return "Off";
         }
 
-        public void SetBrightness(SmartLight light, int level) {
-            if(level >= 0 &&  level <= 100) light.Brightness = level;
+        public bool SetBrightness(SmartLight light, int level) {
+            if (level >= 0 && level <= 100)
+            {
+                light.Brightness = level;
+                return true;
+            }
+
+            return false;
         }
 
         public void ChangeColor(SmartLight light,string newColor)

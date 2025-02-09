@@ -10,7 +10,6 @@ namespace smart_house.Enums
     {
         Heat,
         Cool,
-        Auto,
-        Off
+        Auto
     }
 }
